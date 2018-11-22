@@ -25,3 +25,5 @@ print(classification_report(y_test, predictions))
 
 print("\nAccuracy score: ")
 print(accuracy_score(y_test, predictions))
+
+# multinomia nb
