@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
@@ -6,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 
 
@@ -31,13 +32,9 @@ def plot_images(mlp_prediction, gnb_prediction, dtc_prediction, knn_prediction, 
     d = x_test[0]
     d.shape = (28, 28)
 
-# 5
-# 5
-
     columns = 8
     rows = 10
 
-    # plt.rcParams["figure.figsize"] = [14, 6]
     plt.rcParams["figure.figsize"] = [15, 9]
     fig = plt.figure()
 
@@ -64,17 +61,16 @@ def plot_images(mlp_prediction, gnb_prediction, dtc_prediction, knn_prediction, 
 
 df = pd.read_csv("train.csv").as_matrix()
 
+# df = df[:500]
+
 print(df.shape)
 
 x = df[0:, 1:]
 y = df[0:, 0]
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.1)
+x_train, x_test, y_train, y_test = train_test_split(x, y)
 
 print("Testing set size: %d" % len(x_test))
-
-# x_train = x_train[:10]
-# y_train = y_train[:10]
 
 # MLP CLASSIFIER
 print("\nTraining MLP classifier")
@@ -84,9 +80,14 @@ mlp.fit(x_train, y_train)
 print("\nTesting MLP classifier")
 mlp_pred = mlp.predict(x_test)
 mlp_accuracy = accuracy_score(y_test, mlp_pred)
+mlp_report = classification_report(y_test, mlp_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, mlp_pred))
+<<<<<<< HEAD
 #print("Training set score: %f" % mlp.score(x_train, y_train))
 print("Test set score: %f" % mlp.score(x_test, y_test))
+=======
+print(mlp_report)
+>>>>>>> master
 # mlp_predictions = mlp_pred[:26]
 mlp_predictions = mlp_pred[:81]
 
@@ -97,9 +98,14 @@ knn.fit(x_train, y_train)
 print("\nTesting KNN")
 knn_pred = knn.predict(x_test)
 knn_accuracy = accuracy_score(y_test, knn_pred)
+knn_report = classification_report(y_test, knn_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, knn_pred))
+<<<<<<< HEAD
 #print("Training set score: %f" % knn.score(x_train, y_train))
 print("Test set score: %f" % knn.score(x_test, y_test))
+=======
+print(knn_report)
+>>>>>>> master
 knn_predictions = knn_pred[:81]
 
 # DECISION THREE CLASSIFIER
@@ -109,9 +115,14 @@ dtc.fit(x_train, y_train)
 print("\nTesting Decision Three Classifier")
 dtc_pred = dtc.predict(x_test)
 dtc_accuracy = accuracy_score(y_test, dtc_pred)
+dtc_report = classification_report(y_test, dtc_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, dtc_pred))
+<<<<<<< HEAD
 #print("Training set score: %f" % dtc.score(x_train, y_train))
 print("Test set score: %f" % dtc.score(x_test, y_test))
+=======
+print(dtc_report)
+>>>>>>> master
 dtc_predictions = dtc_pred[:81]
 
 # GAUSSIAN NAIVE BAYES
@@ -121,9 +132,14 @@ gnb.fit(x_train, y_train)
 print("\nTesting Gaussian Naive Bayes")
 gnb_pred = gnb.predict(x_test)
 gnb_accuracy = accuracy_score(y_test, gnb_pred)
+gnb_report = classification_report(y_test, gnb_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, gnb_pred))
+<<<<<<< HEAD
 #print("Training set score: %f" % gnb.score(x_train, y_train))
 print("Test set score: %f" % gnb.score(x_test, y_test))
+=======
+print(gnb_report)
+>>>>>>> master
 gnb_predictions = gnb_pred[:81]
 
 # SUPPORT VECTOR MACHINE
@@ -133,37 +149,126 @@ svm.fit(x_train, y_train)
 print("\nTesting Support Vector Machine")
 svm_pred = svm.predict(x_test)
 svm_accuracy = accuracy_score(y_test, svm_pred)
+svm_report = classification_report(y_test, svm_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, svm_pred))
+<<<<<<< HEAD
 #print("Training set score: %f" % svm.score(x_train, y_train))
 print("Test set score: %f" % svm.score(x_test, y_test))
+=======
+print(svm_report)
+>>>>>>> master
 svm_predictions = svm_pred[:81]
 
 # PLOT IMAGES AND PREDICTIONS
 plot_images(mlp_predictions, knn_predictions, dtc_predictions, gnb_predictions, svm_predictions)
 
-'''
-# Create a large window for easy viewing
+# Classification split
+# https://stackoverflow.com/questions/39662398/scikit-learn-output-metrics-classification-report-into-csv-tab-delimited-format
+
+# PLOT BAR GRAPHS
+# https://matplotlib.org/gallery/statistics/barchart_demo.html
+print("\nPlotting bar graphs")
+n_groups = 10
+bar_width = 0.15
+index = np.arange(n_groups)
+
 plt.rcParams["figure.figsize"] = [16, 9]
+fig, ax = plt.subplots()
 
-# Set labels
-plt.xlabel("INSTANCE")
-plt.ylabel("VALUE")
+# Get MLP
+mlp_precision = []
+lines = mlp_report.split("\n")
+for m in lines[2: -3]:
+    row = {}
+    row_data = m.split('      ')
+    row['class'] = row_data[1]
+    row['precision'] = float(row_data[2])
+    # print(row['class'], end="\t")
+    # print(row['precision'])
+    mlp_precision.append(row['precision'])
 
-# Create lines
-print(y_test[:81])
-plt.plot(mlp_pred[:81], color="Blue")
-plt.plot(y_test[:81], color="Green")
-# plt.plot(predicted, color="Red")
+# Get KNN
+knn_precision = []
+lines = knn_report.split("\n")
+for m in lines[2: -3]:
+    row = {}
+    row_data = m.split('      ')
+    row['class'] = row_data[1]
+    row['precision'] = float(row_data[2])
+    knn_precision.append(row['precision'])
 
-# Create dots
-label = "MLP: " + "%.4f" % round(mlp_accuracy, 4)
-plt.plot(mlp_pred[:81], "ro", color="Blue", label="MLP classifier")
-plt.plot(y_test[:81], "ro", color="Green", label="Actual values")
-# plt.plot(predicted, "ro", color="Red", label="Predicted")
+# Get DTC
+dtc_precision = []
+lines = dtc_report.split("\n")
+for m in lines[2: -3]:
+    row = {}
+    row_data = m.split('      ')
+    row['class'] = row_data[1]
+    row['precision'] = float(row_data[2])
+    dtc_precision.append(row['precision'])
 
-# Prepare and show
+# Get GNB
+gnb_precision = []
+lines = gnb_report.split("\n")
+for m in lines[2: -3]:
+    row = {}
+    row_data = m.split('      ')
+    row['class'] = row_data[1]
+    row['precision'] = float(row_data[2])
+    gnb_precision.append(row['precision'])
+
+# Get SVM
+svm_precision = []
+lines = svm_report.split("\n")
+for m in lines[2: -3]:
+    row = {}
+    row_data = m.split('      ')
+    row['class'] = row_data[1]
+    row['precision'] = float(row_data[2])
+    svm_precision.append(row['precision'])
+
+rect_mlp = ax.bar(index - (bar_width * 1.5), mlp_precision, bar_width, label="MLP")
+
+rect_knn = ax.bar(index - (bar_width * 0.5), knn_precision, bar_width, label="KNN")
+
+rect_dtc = ax.bar(index + (bar_width * 0.5), dtc_precision, bar_width, label="DTC")
+
+rect_gnb = ax.bar(index + (bar_width * 1.5), gnb_precision, bar_width, label="GNB")
+
+rect_svm = ax.bar(index + (bar_width * 2.5), svm_precision, bar_width, label="SVM")
+
+ax.set_xlabel("X label")
+ax.set_ylabel("Y label")
+ax.set_title("Precision for each number (label)")
+ax.set_xticks(index + bar_width / 2)
+ax.set_xticklabels(('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'))
+# ax.tick_params(length=9)
+ax.legend()
+
+plt.show()
+
+# PLOT PIE CHART
+# https://matplotlib.org/api/_as_gen/matplotlib.pyplot.bar.html
+
+labels = 'MLP', 'KNN', 'DTC', 'GNB', 'SVM'
+sizes = [mlp_accuracy, knn_accuracy, dtc_accuracy, gnb_accuracy, svm_accuracy]
+
+fig, ax = plt.subplots()
+
+
+# https://stackoverflow.com/questions/6170246/how-do-i-use-matplotlib-autopct
+def make_autopct(values):
+    def my_autopct(pct):
+        total = sum(values)
+        val = pct * total
+        return '{p:.1f}%'.format(p=val)
+    return my_autopct
+
+
+# ax.pie(sizes, labels=labels, autopct='%1.1f%%')
+ax.pie(sizes, labels=labels, autopct=make_autopct(sizes))
+ax.axis('equal')
+plt.title("Accuracy score")
 plt.legend()
 plt.show()
-'''
-
 
