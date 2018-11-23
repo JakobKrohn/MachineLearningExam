@@ -23,7 +23,7 @@ print(len(y_test))
 
 clf = DecisionTreeClassifier()
 
-clf.fit(x_train, y_train)
+clf.fit(x_train[:50], y_train[:50])
 
 predictions = clf.predict(x_test)
 
@@ -35,5 +35,24 @@ print(classification_report(y_test, predictions))
 
 print("\nAccuracy score: ")
 print(accuracy_score(y_test, predictions))
+
+print("\n\n\n\n")
+print("class\tprecision")
+matrix = classification_report(y_test, predictions)
+
+lines = matrix.split("\n")
+# https://stackoverflow.com/questions/39662398/scikit-learn-output-metrics-classification-report-into-csv-tab-delimited-format
+for m in lines[2: -3]:
+    row = {}
+    row_data = m.split('      ')
+    # row_data = list(filter(None, row_data))
+    row['class'] = row_data[1]
+    row['precision'] = float(row_data[2])
+    row['recall'] = float(row_data[2])
+    row['f1_score'] = float(row_data[3])
+    row['support'] = float(row_data[4])
+    print(row['class'], end="\t")
+    print(row['precision'])
+    # report_data.append(row)
 
 print("\nStop")
