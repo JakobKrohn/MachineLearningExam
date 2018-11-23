@@ -85,7 +85,7 @@ print("\nTesting MLP classifier")
 mlp_pred = mlp.predict(x_test)
 mlp_accuracy = accuracy_score(y_test, mlp_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, mlp_pred))
-print("Training set score: %f" % mlp.score(x_train, y_train))
+#print("Training set score: %f" % mlp.score(x_train, y_train))
 print("Test set score: %f" % mlp.score(x_test, y_test))
 # mlp_predictions = mlp_pred[:26]
 mlp_predictions = mlp_pred[:81]
@@ -98,7 +98,7 @@ print("\nTesting KNN")
 knn_pred = knn.predict(x_test)
 knn_accuracy = accuracy_score(y_test, knn_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, knn_pred))
-print("Training set score: %f" % knn.score(x_train, y_train))
+#print("Training set score: %f" % knn.score(x_train, y_train))
 print("Test set score: %f" % knn.score(x_test, y_test))
 knn_predictions = knn_pred[:81]
 
@@ -110,7 +110,7 @@ print("\nTesting Decision Three Classifier")
 dtc_pred = dtc.predict(x_test)
 dtc_accuracy = accuracy_score(y_test, dtc_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, dtc_pred))
-print("Training set score: %f" % dtc.score(x_train, y_train))
+#print("Training set score: %f" % dtc.score(x_train, y_train))
 print("Test set score: %f" % dtc.score(x_test, y_test))
 dtc_predictions = dtc_pred[:81]
 
@@ -122,7 +122,7 @@ print("\nTesting Gaussian Naive Bayes")
 gnb_pred = gnb.predict(x_test)
 gnb_accuracy = accuracy_score(y_test, gnb_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, gnb_pred))
-print("Training set score: %f" % gnb.score(x_train, y_train))
+#print("Training set score: %f" % gnb.score(x_train, y_train))
 print("Test set score: %f" % gnb.score(x_test, y_test))
 gnb_predictions = gnb_pred[:81]
 
@@ -134,7 +134,7 @@ print("\nTesting Support Vector Machine")
 svm_pred = svm.predict(x_test)
 svm_accuracy = accuracy_score(y_test, svm_pred)
 print("Accuracy score: %f" % accuracy_score(y_test, svm_pred))
-print("Training set score: %f" % svm.score(x_train, y_train))
+#print("Training set score: %f" % svm.score(x_train, y_train))
 print("Test set score: %f" % svm.score(x_test, y_test))
 svm_predictions = svm_pred[:81]
 
