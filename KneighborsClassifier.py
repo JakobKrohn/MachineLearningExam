@@ -14,7 +14,7 @@ y = df[0:, 0]
 x_train, x_test, y_train, y_test = train_test_split(x, y)
 
 #Same result from gridsearch on algorithm, n = 1 is the best.
-clf = neighbors.KNeighborsClassifier(n_neighbors=1, algorithm='auto')
+clf = neighbors.KNeighborsClassifier(n_neighbors=1, algorithm='brute')
 
 clf.fit(x_train, y_train)
 
