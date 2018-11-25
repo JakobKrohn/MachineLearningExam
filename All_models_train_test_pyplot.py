@@ -138,7 +138,7 @@ def plot_pie_chart():
 
 # Read csv file and setup x and y values
 df = pd.read_csv("train.csv").as_matrix()
-df = df[:500]
+# df = df[:500]
 print(df.shape)
 x = df[0:, 1:]
 y = df[0:, 0]
